@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014339709121",
+    "project_id": "personality-quest-232ff",
+    "storage_bucket": "personality-quest-232ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014339709121:android:4603bb566f2192eac00c40",
+        "android_client_info": {
+          "package_name": "edu.uw.ischool.qy54.personalityquest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-vYWCOYbiGdQbn8bb-TgmzHT8kKU045k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
