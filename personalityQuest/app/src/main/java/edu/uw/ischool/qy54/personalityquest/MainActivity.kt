@@ -3,6 +3,9 @@ package edu.uw.ischool.qy54.personalityquest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,5 +18,11 @@ class MainActivity : AppCompatActivity() {
 
         val questions = repo.getQuestions()
         Log.i("test", questions.toString())
+
+
+        // Initialize BottomNavigationView
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navController = findNavController(R.id.nav_host_fragment)
+        navView.setupWithNavController(navController)
     }
 }

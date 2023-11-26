@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_quiz">
+
+    <fragment
+        android:id="@+id/navigation_quiz"
+        android:name="edu.uw.ischool.qy54.personalityquest.Quiz"
+        tools:layout="@layout/quiz" />
+
+    <fragment
+        android:id="@+id/navigation_types"
+        android:name="edu.uw.ischool.qy54.personalityquest.Types"
+        tools:layout="@layout/types" />
+
+    <fragment
+        android:id="@+id/navigation_compare"
+        android:name="edu.uw.ischool.qy54.personalityquest.Compare"
+        tools:layout="@layout/compare" />
+
+    <fragment
+        android:id="@+id/navigation_my_result"
+        android:name="edu.uw.ischool.qy54.personalityquest.MyResult"
+        tools:layout="@layout/my_result" />
+</navigation>

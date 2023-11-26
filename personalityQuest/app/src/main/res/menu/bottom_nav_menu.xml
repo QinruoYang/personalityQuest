@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_quiz"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Quiz" />
+    <item
+        android:id="@+id/navigation_types"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Types" />
+    <item
+        android:id="@+id/navigation_compare"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Compare" />
+    <item
+        android:id="@+id/navigation_my_result"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="My Result" />
+</menu>
