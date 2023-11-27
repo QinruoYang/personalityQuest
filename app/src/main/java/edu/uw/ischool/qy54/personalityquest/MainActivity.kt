@@ -25,4 +25,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
     }
+
+    // Handle back stack
+    override fun onBackPressed() {
+        if (!findNavController(R.id.nav_host_fragment).navigateUp()) {
+            super.onBackPressed()
+        }
+    }
+
+
 }

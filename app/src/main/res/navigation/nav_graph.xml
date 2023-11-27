@@ -13,7 +13,11 @@
     <fragment
         android:id="@+id/navigation_types"
         android:name="edu.uw.ischool.qy54.personalityquest.Types"
-        tools:layout="@layout/types" />
+        tools:layout="@layout/types">
+        <action
+        android:id="@+id/action_typesFragment_to_personalityDetailFragment"
+        app:destination="@id/personalityDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_compare"
@@ -24,4 +28,10 @@
         android:id="@+id/navigation_my_result"
         android:name="edu.uw.ischool.qy54.personalityquest.MyResult"
         tools:layout="@layout/my_result" />
+
+    <fragment
+        android:id="@+id/personalityDetailFragment"
+        android:name="edu.uw.ischool.qy54.personalityquest.PersonalityDetailFragment"
+        tools:layout="@layout/fragment_personality_detail" />
+
 </navigation>
