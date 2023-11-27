@@ -87,7 +87,7 @@ class Quiz : Fragment() {
         btnNext.visibility = View.VISIBLE
         textProgress.visibility = View.VISIBLE
 
-        // Display the first question
+        updateProgress()
         displayQuestion(questions[currentQuestionIndex])
     }
 
@@ -104,8 +104,16 @@ class Quiz : Fragment() {
             // Set a listener for each radio button
             radioButton.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    // Record the user's response when a choice is selected
-                    recordUserResponse(question.category[question.choices.indexOf(choice)])
+                    // Find the index of the selected radio button
+                    val selectedIndex = choicesGroup.indexOfChild(radioButton)
+
+                    // Use the index to get the corresponding category
+                    val selectedCategory = question.category[selectedIndex]
+
+                    // Record the selected category
+                    recordUserResponse(selectedCategory)
+
+                    println("Recorded Category: $selectedCategory")
                 }
             }
         }
@@ -117,13 +125,9 @@ class Quiz : Fragment() {
     private fun onNextButtonClick() {
         // Check if there are more questions
         if (currentQuestionIndex < questions.size - 1) {
-            // Record the user's response for the current question
-            recordUserResponse(questions[currentQuestionIndex].category[0])
-
             currentQuestionIndex++
             displayQuestion(questions[currentQuestionIndex])
 
-            // Update the progress tracker
             updateProgress()
         } else {
             // All questions have been answered
@@ -152,7 +156,7 @@ class Quiz : Fragment() {
 
     private fun onFinishButtonClick() {
         // Determine the user's MBTI type based on their responses
-        val mbtiType = determineMBTIType()
+        val mbtiType = calculateMBTIType()
 
         // Display the result directly in the quiz fragment
         textQuestion.text = "Your MBTI Type: $mbtiType"
@@ -166,8 +170,8 @@ class Quiz : Fragment() {
     }
 
     private fun restartQuiz() {
-        // Reset the quiz state to start again
         currentQuestionIndex = 0
+        userResponses.clear()
 
         textQuestion.visibility = View.GONE
         choicesGroup.visibility = View.GONE
@@ -179,27 +183,36 @@ class Quiz : Fragment() {
         btnRestart.visibility = View.GONE
     }
 
-    private fun determineMBTIType(): String {
-        return calculateMBTIType()
-    }
-
     private fun recordUserResponse(selectedCategory: String) {
         userResponses.add(selectedCategory)
     }
 
-    private fun calculateMBTIType(): String {
-        val categoryCounts = mutableMapOf<String, Int>()
 
-        // Count occurrences of each category
+    private fun calculateMBTIType(): String {
+        val categoryCounts = mutableMapOf<Char, Int>()
+
+        // Count occurrences of each letter in all responses
         for (response in userResponses) {
-            categoryCounts[response] = (categoryCounts[response] ?: 0) + 1
+            for (letter in response) {
+                categoryCounts[letter] = (categoryCounts[letter] ?: 0) + 1
+            }
         }
 
-        // Find the category with the highest count
-        val maxCategory = categoryCounts.maxByOrNull { it.value }?.key
+        println("Final record:  $categoryCounts")
 
-        // Return the MBTI type
-        return maxCategory ?: "Unknown"
+        // Determine the dominant letter in each dimension
+        val dominantE = if (categoryCounts['E'] ?: 0 > categoryCounts['I'] ?: 0) 'E' else 'I'
+        val dominantS = if (categoryCounts['S'] ?: 0 > categoryCounts['N'] ?: 0) 'S' else 'N'
+        val dominantT = if (categoryCounts['T'] ?: 0 > categoryCounts['F'] ?: 0) 'T' else 'F'
+        val dominantJ = if (categoryCounts['J'] ?: 0 > categoryCounts['P'] ?: 0) 'J' else 'P'
+
+        // Build the MBTI type string
+        return buildString {
+            append(dominantE)
+            append(dominantS)
+            append(dominantT)
+            append(dominantJ)
+        }
     }
 
 }
