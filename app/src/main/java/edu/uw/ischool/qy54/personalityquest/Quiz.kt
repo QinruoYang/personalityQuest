@@ -6,8 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 
 class Quiz : Fragment() {
+    private lateinit var quizViewModel: QuizViewModel
     private val userResponses = mutableListOf<String>()
 
     private lateinit var repository: TopicRepository
@@ -29,6 +35,14 @@ class Quiz : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.quiz, container, false)
+
+        // Initialize ViewModel
+        quizViewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
+
+        // Observe the MBTI result
+        quizViewModel.mbtiResult.observe(viewLifecycleOwner, { result ->
+            // Update UI with the result
+        })
 
         // Access the repository from the QuizApp
         repository = (requireActivity().application as QuizApp).accessRepo()
@@ -159,7 +173,19 @@ class Quiz : Fragment() {
         val mbtiType = calculateMBTIType()
 
         // Display the result directly in the quiz fragment
-        textQuestion.text = "Your MBTI Type: $mbtiType"
+        // textQuestion.text = "Your MBTI Type: $mbtiType"
+
+        // Update the result in ResultFragment
+        quizViewModel.setMBTIResult(mbtiType)
+
+        // Assuming you have a bundle defined in QuizFragment to pass the data
+        val bundle = Bundle().apply {
+            putString("mbtiType", mbtiType)
+        }
+
+        // Navigate to ResultFragment with the bundle
+        findNavController().navigate(R.id.action_quizFragment_to_resultFragment, bundle)
+
 
         choicesGroup.visibility = View.GONE
         btnNext.visibility = View.GONE
@@ -212,6 +238,16 @@ class Quiz : Fragment() {
             append(dominantS)
             append(dominantT)
             append(dominantJ)
+        }
+    }
+
+    class QuizViewModel : ViewModel() {
+        private val _mbtiResult = MutableLiveData<String>()
+        val mbtiResult: LiveData<String> get() = _mbtiResult
+
+        fun setMBTIResult(result: String) {
+            _mbtiResult.value = result
+            println("MBTI Result set: $result")
         }
     }
 

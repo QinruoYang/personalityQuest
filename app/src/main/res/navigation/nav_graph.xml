@@ -8,7 +8,13 @@
     <fragment
         android:id="@+id/navigation_quiz"
         android:name="edu.uw.ischool.qy54.personalityquest.Quiz"
-        tools:layout="@layout/quiz" />
+        tools:layout="@layout/quiz">
+            <action
+                android:id="@+id/action_quizFragment_to_resultFragment"
+                app:destination="@id/navigation_my_result">
+
+            </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_types"
