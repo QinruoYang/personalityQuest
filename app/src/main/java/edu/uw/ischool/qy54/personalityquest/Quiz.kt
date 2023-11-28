@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
@@ -37,7 +34,7 @@ class Quiz : Fragment() {
         val view = inflater.inflate(R.layout.quiz, container, false)
 
         // Initialize ViewModel
-        quizViewModel = ViewModelProvider(this).get(QuizViewModel::class.java)
+        quizViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
 
         // Observe the MBTI result
         quizViewModel.mbtiResult.observe(viewLifecycleOwner, { result ->
@@ -238,16 +235,6 @@ class Quiz : Fragment() {
             append(dominantS)
             append(dominantT)
             append(dominantJ)
-        }
-    }
-
-    class QuizViewModel : ViewModel() {
-        private val _mbtiResult = MutableLiveData<String>()
-        val mbtiResult: LiveData<String> get() = _mbtiResult
-
-        fun setMBTIResult(result: String) {
-            _mbtiResult.value = result
-            println("MBTI Result set: $result")
         }
     }
 

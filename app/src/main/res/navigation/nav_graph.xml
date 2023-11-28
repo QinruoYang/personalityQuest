@@ -33,11 +33,20 @@
     <fragment
         android:id="@+id/navigation_my_result"
         android:name="edu.uw.ischool.qy54.personalityquest.MyResult"
-        tools:layout="@layout/my_result" />
+        tools:layout="@layout/my_result">
+        <action
+            android:id="@+id/action_myResultFragment_to_shareFragment"
+            app:destination="@id/navigation_share" />
+    </fragment>
 
     <fragment
         android:id="@+id/personalityDetailFragment"
         android:name="edu.uw.ischool.qy54.personalityquest.PersonalityDetailFragment"
         tools:layout="@layout/fragment_personality_detail" />
+
+    <fragment
+        android:id="@+id/navigation_share"
+        android:name="edu.uw.ischool.qy54.personalityquest.ShareFragment"
+        tools:layout="@layout/share_fragment" />
 
 </navigation>
