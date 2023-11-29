@@ -16,4 +16,5 @@
         android:id="@+id/navigation_my_result"
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="My Result" />
+
 </menu>

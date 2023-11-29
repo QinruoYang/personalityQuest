@@ -28,6 +28,23 @@ class PersonalityDetailFragment : Fragment() {
         val imageResId = resources.getIdentifier("${personalityType?.toLowerCase()}_person", "drawable", context?.packageName)
         view.findViewById<ImageView>(R.id.imageViewPersonality).setImageResource(imageResId)
 
+        val shortDescriptionResId = context?.resources?.getIdentifier("${personalityType?.toLowerCase()}_short_description", "string", context?.packageName)
+        val longDescriptionResId = context?.resources?.getIdentifier("${personalityType?.toLowerCase()}_long_description", "string", context?.packageName)
+
+        shortDescriptionResId?.let {
+            view.findViewById<TextView>(R.id.textViewShortDescription).text = getString(it)
+        }
+
+        longDescriptionResId?.let {
+            view.findViewById<TextView>(R.id.textViewLongDescription).text = getString(it)
+        }
+
+        for (i in 1..4) {
+            val imageResId = resources.getIdentifier("${personalityType?.toLowerCase()}_famous_$i", "drawable", context?.packageName)
+            val imageViewId = resources.getIdentifier("imageViewFamous$i", "id", context?.packageName)
+            view.findViewById<ImageView>(imageViewId)?.setImageResource(imageResId)
+        }
+
         return view
     }
 

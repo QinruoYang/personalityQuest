@@ -27,7 +27,7 @@
             android:layout_rowWeight="1"
             android:text="INTJ"
             android:gravity="center"
-            android:background="#D2B4DE"/>
+            android:background="#E8DFEA"/>
 
         <TextView
             android:id="@+id/intp"
@@ -37,7 +37,7 @@
             android:layout_rowWeight="1"
             android:text="INTP"
             android:gravity="center"
-            android:background="#D2B4DE"/>
+            android:background="#E8DFEA"/>
 
         <TextView
             android:id="@+id/entj"
@@ -47,7 +47,7 @@
             android:layout_rowWeight="1"
             android:text="ENTJ"
             android:gravity="center"
-            android:background="#D2B4DE"/>
+            android:background="#E8DFEA"/>
 
         <TextView
             android:id="@+id/entp"
@@ -57,7 +57,7 @@
             android:layout_rowWeight="1"
             android:text="ENTP"
             android:gravity="center"
-            android:background="#D2B4DE"/>
+            android:background="#E8DFEA"/>
 
         <TextView
             android:id="@+id/infj"
@@ -67,7 +67,7 @@
             android:layout_rowWeight="1"
             android:text="INFJ"
             android:gravity="center"
-            android:background="#ABEBC6"/>
+            android:background="#D6EBE2"/>
         <TextView
             android:id="@+id/infp"
             android:layout_width="0dp"
@@ -76,7 +76,7 @@
             android:layout_rowWeight="1"
             android:text="INFP"
             android:gravity="center"
-            android:background="#ABEBC6"/>
+            android:background="#D6EBE2"/>
         <TextView
             android:id="@+id/enfj"
             android:layout_width="0dp"
@@ -85,7 +85,7 @@
             android:layout_rowWeight="1"
             android:text="ENFJ"
             android:gravity="center"
-            android:background="#ABEBC6"/>
+            android:background="#D6EBE2"/>
         <TextView
             android:id="@+id/enfp"
             android:layout_width="0dp"
@@ -94,7 +94,7 @@
             android:layout_rowWeight="1"
             android:text="ENFP"
             android:gravity="center"
-            android:background="#ABEBC6"/>
+            android:background="#D6EBE2"/>
 
 
         <TextView
@@ -105,7 +105,7 @@
             android:layout_rowWeight="1"
             android:text="ISTJ"
             android:gravity="center"
-            android:background="#AED6F1"/>
+            android:background="#D9E9F0"/>
 
         <TextView
             android:id="@+id/isfj"
@@ -115,7 +115,7 @@
             android:layout_rowWeight="1"
             android:text="ISFJ"
             android:gravity="center"
-            android:background="#AED6F1"/>
+            android:background="#D9E9F0"/>
         <TextView
             android:id="@+id/estj"
             android:layout_width="0dp"
@@ -124,7 +124,7 @@
             android:layout_rowWeight="1"
             android:text="ESTJ"
             android:gravity="center"
-            android:background="#AED6F1"/>
+            android:background="#D9E9F0"/>
         <TextView
             android:id="@+id/esfj"
             android:layout_width="0dp"
@@ -133,7 +133,7 @@
             android:layout_rowWeight="1"
             android:text="ESFJ"
             android:gravity="center"
-            android:background="#AED6F1"/>
+            android:background="#D9E9F0"/>
 
         <TextView
             android:id="@+id/istp"
@@ -143,7 +143,7 @@
             android:layout_rowWeight="1"
             android:text="ISTP"
             android:gravity="center"
-            android:background="#F9E79F"/>
+            android:background="#F9EDD7"/>
         <TextView
             android:id="@+id/isfp"
             android:layout_width="0dp"
@@ -152,7 +152,7 @@
             android:layout_rowWeight="1"
             android:text="ISFP"
             android:gravity="center"
-            android:background="#F9E79F"/>
+            android:background="#F9EDD7"/>
         <TextView
             android:id="@+id/estp"
             android:layout_width="0dp"
@@ -161,7 +161,7 @@
             android:layout_rowWeight="1"
             android:text="ESTP"
             android:gravity="center"
-            android:background="#F9E79F"/>
+            android:background="#F9EDD7"/>
         <TextView
             android:id="@+id/esfp"
             android:layout_width="0dp"
@@ -170,7 +170,7 @@
             android:layout_rowWeight="1"
             android:text="ESFP"
             android:gravity="center"
-            android:background="#F9E79F"/>
+            android:background="#F9EDD7"/>
 
 
     </GridLayout>
