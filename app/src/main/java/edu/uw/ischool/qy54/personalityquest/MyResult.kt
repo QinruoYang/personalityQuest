@@ -14,6 +14,7 @@ class MyResult : Fragment() {
     private lateinit var textResult: TextView
     private lateinit var quizViewModel: QuizViewModel
     private lateinit var buttonOpenSharePage: Button
+    private lateinit var btnRestartQuiz: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +36,14 @@ class MyResult : Fragment() {
         }
 
         buttonOpenSharePage = view.findViewById(R.id.buttonOpenSharePage)
+        btnRestartQuiz = view.findViewById(R.id.btnRestartQuiz)
 
         buttonOpenSharePage.setOnClickListener {
             navigateToShareFragment()
+        }
+
+        btnRestartQuiz.setOnClickListener {
+            restartQuiz()
         }
 
         return view
@@ -50,6 +56,11 @@ class MyResult : Fragment() {
             bundle.putString("mbtiResult", result)
             findNavController().navigate(R.id.action_myResultFragment_to_shareFragment, bundle)
         }
+    }
+
+    private fun restartQuiz() {
+        quizViewModel.setMBTIResult("")
+        findNavController().navigateUp()
     }
 
 }

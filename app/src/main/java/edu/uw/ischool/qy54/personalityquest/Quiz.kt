@@ -61,6 +61,8 @@ class Quiz : Fragment() {
         textProgress.visibility = View.GONE
 
         btnStart.setOnClickListener {
+            currentQuestionIndex = 0
+            userResponses.clear()
             startQuiz()
         }
 
@@ -97,7 +99,6 @@ class Quiz : Fragment() {
         btnFinish.visibility = View.VISIBLE
         btnNext.visibility = View.VISIBLE
         textProgress.visibility = View.VISIBLE
-
         updateProgress()
         displayQuestion(questions[currentQuestionIndex])
     }
@@ -138,10 +139,8 @@ class Quiz : Fragment() {
         if (currentQuestionIndex < questions.size - 1) {
             currentQuestionIndex++
             displayQuestion(questions[currentQuestionIndex])
-
             updateProgress()
         } else {
-            // All questions have been answered
             onFinishButtonClick()
         }
 
@@ -166,21 +165,12 @@ class Quiz : Fragment() {
     }
 
     private fun onFinishButtonClick() {
-        // Determine the user's MBTI type based on their responses
         val mbtiType = calculateMBTIType()
 
-        // Display the result directly in the quiz fragment
-        // textQuestion.text = "Your MBTI Type: $mbtiType"
-
-        // Update the result in ResultFragment
         quizViewModel.setMBTIResult(mbtiType)
-
-        // Assuming you have a bundle defined in QuizFragment to pass the data
         val bundle = Bundle().apply {
             putString("mbtiType", mbtiType)
         }
-
-        // Navigate to ResultFragment with the bundle
         findNavController().navigate(R.id.action_quizFragment_to_resultFragment, bundle)
 
 

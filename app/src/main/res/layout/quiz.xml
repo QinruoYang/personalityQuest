@@ -60,7 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Next Button -->
     <Button
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
@@ -72,7 +71,6 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"/>
 
-    <!-- Back Button -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
@@ -82,7 +80,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"/>
 
-    <!-- Finish Button -->
     <Button
         android:id="@+id/btnFinish"
         android:layout_width="wrap_content"
