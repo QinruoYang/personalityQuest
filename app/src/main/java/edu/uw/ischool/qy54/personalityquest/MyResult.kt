@@ -8,10 +8,12 @@ import androidx.core.content.ContextCompat
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,6 +31,9 @@ class MyResult : Fragment() {
     private lateinit var buttonOpenSharePage: Button
     private lateinit var btnRestartQuiz: Button
     private lateinit var buttonSaveResult: Button
+    private lateinit var buttonSend:Button
+    private lateinit var editTextPhone:EditText
+    private lateinit var buttonSendMessage:Button
 
     private val REQUEST_PERMISSION = 1001
 
@@ -66,6 +71,36 @@ class MyResult : Fragment() {
         buttonSaveResult.setOnClickListener {
             takeAndSaveScreenshot()
         }
+
+        // Handle send result as SMS
+        buttonSend = view.findViewById<Button>(R.id.buttonSend)
+        editTextPhone = view.findViewById<EditText>(R.id.editTextPhone)
+        buttonSendMessage = view.findViewById<Button>(R.id.buttonSendMessage)
+
+        buttonSend.setOnClickListener {
+            editTextPhone.visibility = View.VISIBLE
+            buttonSendMessage.visibility = View.VISIBLE
+        }
+
+        buttonSendMessage.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.SEND_SMS), REQUEST_PERMISSION)
+            } else {
+                if(textResult.text.toString() != "You haven't taken a quiz yet." ) {
+                    val phoneNumber = editTextPhone.text.toString()
+                    val messageToSend = textResult.text.toString().replace("Your", "my")
+                    val smsManager: SmsManager = SmsManager.getDefault()
+                    smsManager.sendTextMessage(phoneNumber, null, messageToSend, null, null)
+                } else {
+
+                    Toast.makeText(requireContext(), "You haven't taken a quiz yet.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+        }
+
+
 
         return view
     }
@@ -134,5 +169,23 @@ class MyResult : Fragment() {
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                val phoneNumber = editTextPhone.text.toString()
+                val smsManager: SmsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(phoneNumber, null, textResult.text.toString(), null, null)
+                Toast.makeText(requireContext(), "Result sent successfully", Toast.LENGTH_SHORT).show()
+            } else {
+
+                Toast.makeText(requireContext(), "SMS permission required to send SMS", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
 }
