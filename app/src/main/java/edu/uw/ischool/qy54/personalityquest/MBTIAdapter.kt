@@ -11,7 +11,7 @@ class MBTIAdapter(private var mbtiList: List<UserResult>, private val onClick: (
         private val textView: TextView = view.findViewById(R.id.mbtiItemTextView)
 
         fun bind(userResult: UserResult) {
-            textView.text = userResult.name
+            textView.text = "${userResult.name}: ${userResult.mbtiType}"
             itemView.setOnClickListener { onClick(adapterPosition) }
         }
     }

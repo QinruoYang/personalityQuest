@@ -28,7 +28,11 @@
     <fragment
         android:id="@+id/navigation_compare"
         android:name="edu.uw.ischool.qy54.personalityquest.Compare"
-        tools:layout="@layout/compare" />
+        tools:layout="@layout/compare">
+        <action
+            android:id="@+id/action_navigationCompare_to_comparisonDetailFragment"
+            app:destination="@id/comparisonDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_my_result"
@@ -48,5 +52,12 @@
         android:id="@+id/navigation_share"
         android:name="edu.uw.ischool.qy54.personalityquest.ShareFragment"
         tools:layout="@layout/share_fragment" />
+
+    <fragment
+        android:id="@+id/comparisonDetailFragment"
+        android:name="edu.uw.ischool.qy54.personalityquest.ComparisonDetailFragment"
+        tools:layout="@layout/fragment_comparisondetail">
+    </fragment>
+
 
 </navigation>

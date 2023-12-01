@@ -47,7 +47,7 @@ class ShareFragment : Fragment() {
         val database = FirebaseDatabase.getInstance()
         val ref = database.getReference("results")
 
-        val resultId = ref.push().key
+        val resultId = ref.push().key 
 
         val data = mapOf(
             "name" to userName,
