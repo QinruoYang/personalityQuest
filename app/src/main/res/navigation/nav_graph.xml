@@ -41,7 +41,11 @@
         <action
             android:id="@+id/action_myResultFragment_to_shareFragment"
             app:destination="@id/navigation_share" />
+        <action
+            android:id="@+id/action_myResultFragment_to_personalityDetailFragment"
+            app:destination="@id/personalityDetailFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/personalityDetailFragment"

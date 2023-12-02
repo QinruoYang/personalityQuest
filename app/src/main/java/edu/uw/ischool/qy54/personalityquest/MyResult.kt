@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,7 @@ class MyResult : Fragment() {
     private lateinit var buttonSend:Button
     private lateinit var editTextPhone:EditText
     private lateinit var buttonSendMessage:Button
+    private lateinit var buttonSeeExplanation: Button
 
     private val REQUEST_PERMISSION = 1001
 
@@ -59,6 +61,7 @@ class MyResult : Fragment() {
         buttonOpenSharePage = view.findViewById(R.id.buttonOpenSharePage)
         btnRestartQuiz = view.findViewById(R.id.btnRestartQuiz)
         buttonSaveResult = view.findViewById(R.id.buttonSaveResult)
+        buttonSeeExplanation = view.findViewById(R.id.buttonSeeExplanation)
 
         buttonOpenSharePage.setOnClickListener {
             navigateToShareFragment()
@@ -72,7 +75,10 @@ class MyResult : Fragment() {
             takeAndSaveScreenshot()
         }
 
-        // Handle send result as SMS
+        buttonSeeExplanation.setOnClickListener {
+            navigateToPersonalityDetailFragment()
+        }
+
         buttonSend = view.findViewById<Button>(R.id.buttonSend)
         editTextPhone = view.findViewById<EditText>(R.id.editTextPhone)
         buttonSendMessage = view.findViewById<Button>(R.id.buttonSendMessage)
@@ -170,8 +176,6 @@ class MyResult : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSION) {
@@ -184,6 +188,13 @@ class MyResult : Fragment() {
 
                 Toast.makeText(requireContext(), "SMS permission required to send SMS", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun navigateToPersonalityDetailFragment() {
+        quizViewModel.mbtiResult.value?.let { result ->
+            val bundle = bundleOf("PERSONALITY_TYPE" to result)
+            findNavController().navigate(R.id.action_myResultFragment_to_personalityDetailFragment, bundle)
         }
     }
 
