@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 class Quiz : Fragment() {
-    private lateinit var quizViewModel: QuizViewModel
     private val userResponses = mutableListOf<String>()
 
     private lateinit var repository: TopicRepository
@@ -26,6 +25,10 @@ class Quiz : Fragment() {
     private lateinit var questions: MutableList<Question>
     private var currentQuestionIndex: Int = 0
 
+    private val sharedPrefs by lazy {
+        (requireActivity().application as QuizApp).sharedPrefs
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,13 +36,6 @@ class Quiz : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.quiz, container, false)
 
-        // Initialize ViewModel
-        quizViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
-
-        // Observe the MBTI result
-        quizViewModel.mbtiResult.observe(viewLifecycleOwner, { result ->
-            // Update UI with the result
-        })
 
         // Access the repository from the QuizApp
         repository = (requireActivity().application as QuizApp).accessRepo()
@@ -167,7 +163,8 @@ class Quiz : Fragment() {
     private fun onFinishButtonClick() {
         val mbtiType = calculateMBTIType()
 
-        quizViewModel.setMBTIResult(mbtiType)
+//        quizViewModel.setMBTIResult(mbtiType)
+        sharedPrefs.edit().putString("mbtiType", mbtiType).apply()
         val bundle = Bundle().apply {
             putString("mbtiType", mbtiType)
         }

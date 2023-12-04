@@ -20,7 +20,13 @@ class Compare : Fragment() {
 
     private lateinit var mbtiRecyclerView: RecyclerView
     private lateinit var mbtiAdapter: MBTIAdapter
-    private lateinit var quizViewModel: QuizViewModel
+
+//    private val sharedPrefs by lazy {
+//        requireActivity().getSharedPreferences("QuizPrefs", Context.MODE_PRIVATE)
+//    }
+    private val sharedPrefs by lazy {
+        (requireActivity().application as QuizApp).sharedPrefs
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +36,13 @@ class Compare : Fragment() {
 
         mbtiRecyclerView = view.findViewById(R.id.mbtiRecyclerView)
         mbtiRecyclerView.layoutManager = LinearLayoutManager(context)
-        quizViewModel = ViewModelProvider(requireActivity()).get(QuizViewModel::class.java)
 
         val dividerItemDecoration = DividerItemDecoration(mbtiRecyclerView.context, DividerItemDecoration.VERTICAL)
         mbtiRecyclerView.addItemDecoration(dividerItemDecoration)
 
         mbtiAdapter = MBTIAdapter(emptyList()) { userResult ->
-            if (quizViewModel.mbtiResult.value.isNullOrEmpty()) {
+            val currentUserMBTI = sharedPrefs.getString("mbtiType", null)
+            if (currentUserMBTI.isNullOrEmpty()) {
                 Toast.makeText(context, "Please take the quiz first.", Toast.LENGTH_SHORT).show()
             } else {
                 navigateToComparisonFragment(userResult)
@@ -71,9 +77,11 @@ class Compare : Fragment() {
     }
 
     private fun navigateToComparisonFragment(userResult: UserResult) {
+        val currentUserMBTI = sharedPrefs.getString("mbtiType", "N/A")
+
         val bundle = Bundle().apply {
             putSerializable("userResult", userResult) // Assuming UserResult is Serializable
-            putString("currentUserMBTI", quizViewModel.mbtiResult.value)
+            putString("currentUserMBTI", currentUserMBTI)
         }
         findNavController().navigate(R.id.action_navigationCompare_to_comparisonDetailFragment, bundle)
     }

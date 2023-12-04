@@ -2,6 +2,7 @@ package edu.uw.ischool.qy54.personalityquest
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import org.json.JSONArray
 import java.io.File
@@ -13,9 +14,11 @@ import java.util.concurrent.Executors
 
 class QuizApp: Application() {
     private lateinit var repository: TopicRepository
+    lateinit var sharedPrefs: SharedPreferences
 
     override fun onCreate() {
         super.onCreate()
+        sharedPrefs = getSharedPreferences("QuizPrefs", Context.MODE_PRIVATE)
         repository = MockTopicRepository(this)
     }
 
