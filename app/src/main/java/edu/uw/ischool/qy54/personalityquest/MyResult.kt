@@ -43,7 +43,8 @@ class MyResult : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.my_result, container, false)
@@ -177,12 +178,13 @@ class MyResult : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSION) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                saveScreenshotToStorage(takeScreenshot())
                 val phoneNumber = editTextPhone.text.toString()
                 val smsManager: SmsManager = SmsManager.getDefault()
                 smsManager.sendTextMessage(phoneNumber, null, textResult.text.toString(), null, null)
                 Toast.makeText(requireContext(), "Result sent successfully", Toast.LENGTH_SHORT).show()
             } else {
-
+                showToast("Permission denied. Cannot save screenshot.")
                 Toast.makeText(requireContext(), "SMS permission required to send SMS", Toast.LENGTH_SHORT).show()
             }
         }
@@ -195,6 +197,4 @@ class MyResult : Fragment() {
             findNavController().navigate(R.id.action_myResultFragment_to_personalityDetailFragment, bundle)
         }
     }
-
-
 }
