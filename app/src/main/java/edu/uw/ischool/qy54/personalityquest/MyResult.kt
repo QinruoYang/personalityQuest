@@ -9,6 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.telephony.SmsManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +61,10 @@ class MyResult : Fragment() {
         buttonSaveResult = view.findViewById(R.id.buttonSaveResult)
         buttonSeeExplanation = view.findViewById(R.id.buttonSeeExplanation)
 
+
+
+
+
         buttonOpenSharePage.setOnClickListener {
             navigateToShareFragment()
         }
@@ -78,6 +84,34 @@ class MyResult : Fragment() {
         buttonSend = view.findViewById<Button>(R.id.buttonSend)
         editTextPhone = view.findViewById<EditText>(R.id.editTextPhone)
         buttonSendMessage = view.findViewById<Button>(R.id.buttonSendMessage)
+
+        // Handle btn enable control
+        if(mbtiResult != "You haven't taken a quiz yet.") {
+            btnRestartQuiz.isEnabled = true;
+            buttonOpenSharePage.isEnabled = true;
+            buttonSend.isEnabled = true;
+            buttonSaveResult.isEnabled = true;
+        }
+
+        val watcher = object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.toString().length == 10) {
+                    buttonSendMessage.isEnabled = true;
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        }
+
+        editTextPhone.addTextChangedListener(watcher)
 
         buttonSend.setOnClickListener {
             editTextPhone.visibility = View.VISIBLE
