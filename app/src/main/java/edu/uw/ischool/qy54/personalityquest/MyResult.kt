@@ -1,13 +1,17 @@
 package edu.uw.ischool.qy54.personalityquest
 
 import android.Manifest
+import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.telephony.SmsManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -199,10 +203,29 @@ class MyResult : Fragment() {
             stream.flush()
             stream.close()
             showToast("Screenshot saved to: ${filePath.absolutePath}")
+            galleryAddPic(filePath)
         } catch (e: Exception) {
             showToast("Failed to save screenshot: ${e.message}")
         }
     }
+
+    private fun galleryAddPic(file: File) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, file.name)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/PersonalityQuest/")
+            }
+            val resolver = requireContext().contentResolver
+            resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        } else {
+            Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+                mediaScanIntent.data = Uri.fromFile(file)
+                requireContext().sendBroadcast(mediaScanIntent)
+            }
+        }
+    }
+
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
