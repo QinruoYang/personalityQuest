@@ -11,7 +11,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="MBTI Compatibility Analysis:\n\nExplore MBTI Compatibility Analysis to understand how different personality types match or complement each other in communication, work, and relationships. Select a personality type from the list below to view a comparative analysis with your own MBTI result."
+        android:text="MBTI Compatibility Analysis:\n\nExplore MBTI Compatibility Analysis to understand how different personality types match or complement each other in communication, work, and relationships.\n\nSelect a personality type from the list below to view a comparative analysis with your own MBTI result.\n"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
