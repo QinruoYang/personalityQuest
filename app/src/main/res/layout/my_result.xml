@@ -44,7 +44,8 @@
         android:text="Restart Quiz"
         app:layout_constraintTop_toBottomOf="@id/buttonOpenSharePage"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/buttonSend"
@@ -91,7 +92,8 @@
         app:layout_constraintTop_toBottomOf="@id/text_my_result"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="navigateToPersonalityDetailFragment"/>
+        android:onClick="navigateToPersonalityDetailFragment"
+        android:enabled="false"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

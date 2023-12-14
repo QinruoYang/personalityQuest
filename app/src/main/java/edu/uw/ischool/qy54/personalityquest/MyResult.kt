@@ -65,10 +65,6 @@ class MyResult : Fragment() {
         buttonSaveResult = view.findViewById(R.id.buttonSaveResult)
         buttonSeeExplanation = view.findViewById(R.id.buttonSeeExplanation)
 
-
-
-
-
         buttonOpenSharePage.setOnClickListener {
             navigateToShareFragment()
         }
@@ -95,6 +91,7 @@ class MyResult : Fragment() {
             buttonOpenSharePage.isEnabled = true;
             buttonSend.isEnabled = true;
             buttonSaveResult.isEnabled = true;
+            buttonSeeExplanation.isEnabled = true;
         }
 
         val watcher = object: TextWatcher {

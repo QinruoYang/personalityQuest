@@ -21,6 +21,7 @@ class Quiz : Fragment() {
     private lateinit var btnFinish: Button
     private lateinit var textProgress: TextView
     private lateinit var btnRestart: Button
+    private lateinit var descriptionText: TextView
 
     private lateinit var questions: MutableList<Question>
     private var currentQuestionIndex: Int = 0
@@ -48,6 +49,7 @@ class Quiz : Fragment() {
         btnFinish = view.findViewById(R.id.btnFinish)
         textProgress = view.findViewById(R.id.textProgress)
         btnRestart = view.findViewById(R.id.btnRestart)
+        descriptionText = view.findViewById(R.id.descriptionText)
 
         textQuestion.visibility = View.GONE
         choicesGroup.visibility = View.GONE
@@ -55,6 +57,7 @@ class Quiz : Fragment() {
         btnBack.visibility = View.GONE
         btnFinish.visibility = View.GONE
         textProgress.visibility = View.GONE
+
 
         btnStart.setOnClickListener {
             currentQuestionIndex = 0
@@ -95,6 +98,8 @@ class Quiz : Fragment() {
         btnFinish.visibility = View.VISIBLE
         btnNext.visibility = View.VISIBLE
         textProgress.visibility = View.VISIBLE
+        descriptionText.visibility = View.GONE
+
         updateProgress()
         displayQuestion(questions[currentQuestionIndex])
     }
@@ -122,8 +127,12 @@ class Quiz : Fragment() {
                     recordUserResponse(selectedCategory)
 
                     println("Recorded Category: $selectedCategory")
+
+                    btnNext.isEnabled = true
                 }
             }
+
+            btnNext.isEnabled = false
         }
 
         // Hide the "Next" button based on whether it's the last question
@@ -157,6 +166,16 @@ class Quiz : Fragment() {
 
             // Update the progress tracker
             updateProgress()
+        } else if (currentQuestionIndex == 0) {
+            textQuestion.visibility = View.GONE
+            choicesGroup.visibility = View.GONE
+            btnNext.visibility = View.GONE
+            btnBack.visibility = View.GONE
+            btnFinish.visibility = View.GONE
+            textProgress.visibility = View.GONE
+            btnStart.visibility = View.VISIBLE
+            descriptionText.visibility = View.VISIBLE
+            btnRestart.visibility = View.GONE
         }
     }
 

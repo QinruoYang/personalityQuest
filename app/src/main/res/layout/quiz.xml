@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="Next"
-        android:visibility="visible"
+        android:enabled="false"
         app:layout_constraintEnd_toStartOf="@+id/btnFinish"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toEndOf="@+id/btnBack"
@@ -112,4 +112,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Welcome to the MBTI Personality Test!
+                        Discover more about yourself with the Myers-Briggs Type Indicator (MBTI)."
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/btnStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
