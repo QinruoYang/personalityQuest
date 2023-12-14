@@ -137,8 +137,6 @@ class MyResult : Fragment() {
 
         }
 
-
-
         return view
     }
 
@@ -159,19 +157,15 @@ class MyResult : Fragment() {
     }
 
     private fun takeAndSaveScreenshot() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_PERMISSION
-                )
-                return
-            }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                REQUEST_PERMISSION
+            )
+            return
         }
         saveScreenshotToStorage(takeScreenshot())
     }
@@ -188,21 +182,34 @@ class MyResult : Fragment() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val fileName = "Screenshot_$timeStamp.png"
 
-        val storageDir =
-            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "/PersonalityQuest/")
-        storageDir.mkdirs()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            }
 
-        val filePath = File(storageDir, fileName)
+            val resolver = requireContext().contentResolver
+            val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 
-        try {
-            val stream = FileOutputStream(filePath)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            stream.flush()
-            stream.close()
-            showToast("Screenshot saved to: ${filePath.absolutePath}")
-            galleryAddPic(filePath)
-        } catch (e: Exception) {
-            showToast("Failed to save screenshot: ${e.message}")
+            uri?.let { contentUri ->
+                resolver.openOutputStream(contentUri)?.use { outputStream ->
+                    if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)) {
+                        showToast("Failed to save bitmap.")
+                    } else {
+                        showToast("Screenshot saved successfully.")
+                    }
+                } ?: showToast("Failed to open output stream.")
+            } ?: showToast("Failed to create media entry.")
+        } else {
+            val storageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "YourAppName")
+            if (!storageDir.exists()) storageDir.mkdirs()
+
+            val imageFile = File(storageDir, fileName)
+            FileOutputStream(imageFile).use { fos ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                showToast("Screenshot saved to: ${imageFile.absolutePath}")
+            }
         }
     }
 
@@ -228,18 +235,15 @@ class MyResult : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSION) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 saveScreenshotToStorage(takeScreenshot())
-                val phoneNumber = editTextPhone.text.toString()
-                val smsManager: SmsManager = SmsManager.getDefault()
-                smsManager.sendTextMessage(phoneNumber, null, textResult.text.toString(), null, null)
-                Toast.makeText(requireContext(), "Result sent successfully", Toast.LENGTH_SHORT).show()
             } else {
                 showToast("Permission denied. Cannot save screenshot.")
-                Toast.makeText(requireContext(), "SMS permission required to send SMS", Toast.LENGTH_SHORT).show()
             }
         }
     }
