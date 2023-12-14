@@ -158,10 +158,9 @@ class MyResult : Fragment() {
 
     private fun takeAndSaveScreenshot() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // For Android 10 and above, use the existing MediaStore logic
             saveScreenshotToStorage(takeScreenshot())
         } else {
-            // For below Android 10, check for WRITE_EXTERNAL_STORAGE permission
+            // For below Android 10
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_PERMISSION)
