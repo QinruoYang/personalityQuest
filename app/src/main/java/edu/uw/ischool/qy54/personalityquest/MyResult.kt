@@ -128,6 +128,7 @@ class MyResult : Fragment() {
                     val messageToSend = textResult.text.toString().replace("Your", "my")
                     val smsManager: SmsManager = SmsManager.getDefault()
                     smsManager.sendTextMessage(phoneNumber, null, messageToSend, null, null)
+                    Toast.makeText(requireContext(), "Message of result send to $phoneNumber", Toast.LENGTH_SHORT).show()
                 } else {
 
                     Toast.makeText(requireContext(), "You haven't taken a quiz yet.", Toast.LENGTH_SHORT).show()

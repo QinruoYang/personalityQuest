@@ -30,7 +30,7 @@
     {"question": "In company do you:", "choices": ["initiate conversation", "wait to be approached"], "category": ["E", "I"]}, 
     {"question": "Common sense is:", "choices": ["rarely questionable", "frequently questionable"], "category": ["S", "N"]}, 
     {"question": "Children often do not:", "choices": ["make themselves useful enough", "exercise their fantasy enough"], "category": ["S", "N"]}, 
-    {"question": "In making decisions do you feel more b. design and research comfortable with:", "choices": ["standards", "feelings"], "category": ["T", "F"]}, 
+    {"question": "In making decisions do you feel more comfortable with:", "choices": ["standards", "feelings"], "category": ["T", "F"]}, 
     {"question": "Are you more:", "choices": ["firm than gentle", "gentle than firm"], "category": ["T", "F"]}, 
     {"question": "Which is more admirable:", "choices": ["the ability to organize and be methodical", "the ability to adapt and make do"], "category": ["J", "P"]}, 
     {"question": "Do you put more value on:", "choices": ["infinite", "open-minded"], "category": ["J", "P"]}]
