@@ -24,7 +24,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import java.io.File
 import java.io.FileOutputStream
@@ -57,8 +56,12 @@ class MyResult : Fragment() {
         textResult = view.findViewById(R.id.text_my_result)
 
         //get result from preference
-        val mbtiResult = sharedPrefs.getString("mbtiType", "You haven't taken a quiz yet.")
-        textResult.text = "Your MBTI Type: $mbtiResult"
+        val mbtiResult = sharedPrefs.getString("mbtiType", null)
+        if (mbtiResult != null) {
+            textResult.text = "Your MBTI Type: $mbtiResult"
+        } else {
+            textResult.text = "You haven't taken a quiz yet."
+        }
 
         buttonOpenSharePage = view.findViewById(R.id.buttonOpenSharePage)
         btnRestartQuiz = view.findViewById(R.id.btnRestartQuiz)
@@ -86,7 +89,7 @@ class MyResult : Fragment() {
         buttonSendMessage = view.findViewById<Button>(R.id.buttonSendMessage)
 
         // Handle btn enable control
-        if(mbtiResult != "You haven't taken a quiz yet.") {
+        if(mbtiResult != null) {
             btnRestartQuiz.isEnabled = true;
             buttonOpenSharePage.isEnabled = true;
             buttonSend.isEnabled = true;
