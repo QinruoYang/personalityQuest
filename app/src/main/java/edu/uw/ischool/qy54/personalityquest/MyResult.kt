@@ -157,17 +157,18 @@ class MyResult : Fragment() {
     }
 
     private fun takeAndSaveScreenshot() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
-                requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                REQUEST_PERMISSION
-            )
-            return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // For Android 10 and above, use the existing MediaStore logic
+            saveScreenshotToStorage(takeScreenshot())
+        } else {
+            // For below Android 10, check for WRITE_EXTERNAL_STORAGE permission
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_PERMISSION)
+                return
+            }
+            saveScreenshotToLegacyStorage(takeScreenshot())
         }
-        saveScreenshotToStorage(takeScreenshot())
     }
 
     private fun takeScreenshot(): Bitmap {
@@ -210,6 +211,25 @@ class MyResult : Fragment() {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
                 showToast("Screenshot saved to: ${imageFile.absolutePath}")
             }
+        }
+    }
+
+    private fun saveScreenshotToLegacyStorage(bitmap: Bitmap) {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val fileName = "Screenshot_$timeStamp.png"
+        val storageDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "/PersonalityQuest/")
+        storageDir.mkdirs()
+        val filePath = File(storageDir, fileName)
+
+        try {
+            val stream = FileOutputStream(filePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.flush()
+            stream.close()
+            showToast("Screenshot saved to: ${filePath.absolutePath}")
+            galleryAddPic(filePath)
+        } catch (e: Exception) {
+            showToast("Failed to save screenshot: ${e.message}")
         }
     }
 
